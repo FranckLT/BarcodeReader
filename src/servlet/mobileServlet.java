@@ -14,12 +14,17 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 
 import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 import com.sun.scenario.effect.impl.sw.java.JSWBlend_COLOR_BURNPeer;
 
+import beans.Category;
 import beans.Hardware;
+import beans.Result;
 import beans.Room;
+import databaseUtils.DBHardwareUtils;
 import databaseUtils.DBRoomsUtils;
 import jdk.internal.dynalink.beans.StaticClass;
+import utils.Method;
 
 /**
  * Servlet implementation class mobileServlet
@@ -53,9 +58,6 @@ public class mobileServlet extends HttpServlet {
 			
 			response.getOutputStream().print(listRoomsJSON);
 			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -67,18 +69,56 @@ public class mobileServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-	
 		
-	String string = convertStreamToString(request.getInputStream());
-	
-	response.getOutputStream().print(string);
+		ArrayList<Hardware> hardwareList = new ArrayList<>();
 		
-	}
-	
-	static String convertStreamToString(java.io.InputStream is) {
-	    java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
-	    return s.hasNext() ? s.next() : "";
+		// recupération JSON
+		
+		String string = Method.convertStreamToString(request.getInputStream());
+		
+		System.out.println(string);
+		
+		// transformation en result
+		
+		Result result = gson.fromJson(string, Result.class);
+		
+		try {
+			
+			// Récup objet HardWare si existant sinon vide
+			
+			hardwareList = DBHardwareUtils.returnOneHardware(result.getCode());
+			
+			// test si le hardware existent en base
+			
+			if (hardwareList.isEmpty()) {
+				
+				// existe pas => on l'enregistre
+				
+				Room room = DBRoomsUtils.returnOneRooms(result.getRoom()).get(0);
+				
+				Category category = Method.findCategoryHardware(result.getCode());
+				
+				Hardware hardware = new Hardware(result.getCode(), room, category);
+				
+				DBHardwareUtils.insertHardware(hardware);
+				
+			} else {
+				
+				Room room = DBRoomsUtils.returnOneRooms(result.getRoom()).get(0);
+				
+				// existe => on met à jour la room du hardware
+				
+				hardwareList.get(0).setRoom(room);
+				
+				DBHardwareUtils.updateHardware(hardwareList.get(0));
+				
+			}
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			
+		}
+			
 	}
 
 }
