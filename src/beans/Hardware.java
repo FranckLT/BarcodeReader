@@ -2,20 +2,19 @@ package beans;
 
 public class Hardware {
 	
-	private int id;
-	
 	private String code;
 	
 	private Room room;
 	
 	private Category category;
+	
+	
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
+	public Hardware( String code, Room room, Category category) {
+		super();
+		this.code = code;
+		this.room = room;
+		this.category = category;
 	}
 
 	public String getCode() {
