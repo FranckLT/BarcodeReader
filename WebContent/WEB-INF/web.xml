@@ -9,6 +9,7 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  
   <servlet>
     <servlet-name>mobileServlet</servlet-name>
     <servlet-class>servlet.mobileServlet</servlet-class>
@@ -25,5 +26,14 @@
   <servlet-mapping>
     <servlet-name>WebsiteServlet</servlet-name>
     <url-pattern>/acceuil</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>AddRoomServlet</servlet-name>
+    <servlet-class>servlet.AddRoomServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddRoomServlet</servlet-name>
+    <url-pattern>/addRoom</url-pattern>
   </servlet-mapping>
 </web-app>

@@ -18,43 +18,53 @@
 <title>home</title>
 </head>
 <body>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-	<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+	<div
+		class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
 		<h5 class="my-0 mr-md-auto font-weight-normal">BarCode Reader</h5>
-		<nav class="my-2 my-md-0 mr-md-3"> <a class="p-2 text-dark"
-			href="#">Acceuil</a> <a class="p-2 text-dark" href="#">Ajouter
-			Salle</a> <a class="p-2 text-dark" href="#">Ajouter Categorie</a> <a
-			class="p-2 text-dark" href="#">Contact</a> </nav>
+		<nav class="my-2 my-md-0 mr-md-3"> 
+		
+			<a class="p-2 text-dark" href="/BarcodeReader/acceuil">Acceuil</a> 
+			
+			<a class="p-2 text-dark" href="/BarcodeReader/addRoom">Ajouter Salle</a> 
+			
+			<a class="p-2 text-dark" href="#">Ajouter Categorie</a>
+			
+			<a class="p-2 text-dark" href="#">Contact</a>
+			
+		</nav>
+		
 		<a class="btn btn-outline-primary" href="#">LOL</a>
+		
 	</div>
 
-	<div
-		class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+	<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+	
 		<h1 class="display-4">List des hardwares recensés</h1>
-		<p class="lead">Ici vous trouverez tout les matériels que vous
-			avez scannés.</p>
+		
+		<p class="lead">Ici vous trouverez tout les matériels que vous avez scannés.</p>
+		
 	</div>
 
 	<ul>
 		<c:forEach items="${listRooms}" var="room" varStatus="status">
 			<li class="card-header">
-				<h4> Salle ${room.name}</h4>
+				<h4>Salle ${room.name}</h4>
 				<ul>
-				<div class="card-body">
-					<c:forEach items="${listHardware}" var="hardware" varStatus="status">
-						<c:if test="${hardware.room.id == room.id }">
-							<li class="card-text">
-								<p>
-									${hardware.code}
-									<br>
-									${hardware.category.name}
-								</p>
-							</li>
-						</c:if>
-					</c:forEach>
+					<div class="card-body">
+						<c:forEach items="${listHardware}" var="hardware"
+							varStatus="status">
+							<c:if test="${hardware.room.id == room.id }">
+								<li class="card-text">
+									<p>
+										${hardware.code} | ${hardware.category.name}
+									</p>
+								</li>
+							</c:if>
+						</c:forEach>
 					</div>
 				</ul>
-			</li>	
+			</li>
 		</c:forEach>
 	</ul>
 
