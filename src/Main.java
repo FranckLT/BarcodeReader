@@ -9,15 +9,15 @@ import beans.Room;
 import databaseUtils.DBHardwareUtils;
 import databaseUtils.DBRoomsUtils;
 import sun.invoke.empty.Empty;
+import utils.Method;
 
 public class Main {
 
 	public static void main(String[] args) throws SQLException, Exception {
 		
-		Hardware hardware = new Hardware("45T54TE", new Room(1, "sfd"), new Category(3, "sdff"));
+		String string = "!§ç§ç(àç)";
 		
-		DBHardwareUtils.updateHardware(hardware);
-		
+		Method.itCodeContainsSpecialChars(string);
 		
 	}
 

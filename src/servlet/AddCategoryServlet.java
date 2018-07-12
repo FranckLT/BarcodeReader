@@ -11,45 +11,44 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import beans.Category;
 import beans.Room;
+import databaseUtils.DBCategoryUtils;
 import databaseUtils.DBRoomsUtils;
 import utils.Method;
 
 /**
- * Servlet implementation class AddRoomServlet
+ * Servlet implementation class AddCategoryServlet
  */
-@WebServlet("/AddRoomServlet")
-public class AddRoomServlet extends HttpServlet {
+@WebServlet("/AddCategoryServlet")
+public class AddCategoryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static Gson gson;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddRoomServlet() {
+    public AddCategoryServlet() {
         super();
         Gson gson = new Gson();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		try {
-			
-			ArrayList<Room> listRooms = DBRoomsUtils.returnAllRooms();
-			
-			request.setAttribute("listRooms", listRooms);
-			
-			
+
+			ArrayList<Category> listCategories = DBCategoryUtils.returnAllCategories();
+
+			request.setAttribute("listCategories", listCategories);
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		
-		getServletContext().getRequestDispatcher("/WEB-INF/addRoom.jsp").forward(request, response);
+		getServletContext().getRequestDispatcher("/WEB-INF/addCategory.jsp").forward(request, response);
 	}
 
 	/**
@@ -57,28 +56,29 @@ public class AddRoomServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		ArrayList<Room> listRoom;
+		ArrayList<Category> listCategory;
 		
 		try {
-			
+
 			String string = Method.convertStreamToString(request.getInputStream());
+
+			String categoryName = Method.findName(string);
+
+			Category category = new Category(0, categoryName);
 			
-			String roomName = Method.findName(string);
+			listCategory = DBCategoryUtils.returnOneCategory(categoryName);
 			
-			Room room = new Room(0, roomName);
-			
-			listRoom = DBRoomsUtils.returnOneRoom(room);
-			
-			if (listRoom.isEmpty()) {
-				DBRoomsUtils.insertRoom(room);
+			if (listCategory.isEmpty()) {
+				DBCategoryUtils.insertRoom(category);
 			}
+
 			
-			
-			
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		
 		doGet(request, response);
 	}

@@ -9,7 +9,6 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  
   <servlet>
     <servlet-name>mobileServlet</servlet-name>
     <servlet-class>servlet.mobileServlet</servlet-class>
@@ -18,16 +17,14 @@
     <servlet-name>mobileServlet</servlet-name>
     <url-pattern>/rooms</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>WebsiteServlet</servlet-name>
     <servlet-class>servlet.WebsiteServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>WebsiteServlet</servlet-name>
-    <url-pattern>/acceuil</url-pattern>
+    <url-pattern>/home</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>AddRoomServlet</servlet-name>
     <servlet-class>servlet.AddRoomServlet</servlet-class>
@@ -35,5 +32,29 @@
   <servlet-mapping>
     <servlet-name>AddRoomServlet</servlet-name>
     <url-pattern>/addRoom</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AddCategoryServlet</servlet-name>
+    <servlet-class>servlet.AddCategoryServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddCategoryServlet</servlet-name>
+    <url-pattern>/addCategory</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>CategoriesPHPServlet</servlet-name>
+    <servlet-class>servlet.CategoriesPHPServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CategoriesPHPServlet</servlet-name>
+    <url-pattern>/categories</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>CodeGeneratorServlet</servlet-name>
+    <servlet-class>servlet.CodeGeneratorServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CodeGeneratorServlet</servlet-name>
+    <url-pattern>/codeGenerator</url-pattern>
   </servlet-mapping>
 </web-app>

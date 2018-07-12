@@ -94,17 +94,24 @@ public class mobileServlet extends HttpServlet {
 				
 				// existe pas => on l'enregistre
 				
-				Room room = DBRoomsUtils.returnOneRooms(result.getRoom()).get(0);
+				if (Method.verifyCode(result.getCode())) {
+					
+					Room room = DBRoomsUtils.returnOneRoomByID(result.getRoom()).get(0);
+					
+					Category category = Method.findCategoryHardware(result.getCode());
+					
+					Hardware hardware = new Hardware(result.getCode(), room, category);
+					
+					DBHardwareUtils.insertHardware(hardware);
+					
+				} else {
+					
+				}
 				
-				Category category = Method.findCategoryHardware(result.getCode());
-				
-				Hardware hardware = new Hardware(result.getCode(), room, category);
-				
-				DBHardwareUtils.insertHardware(hardware);
 				
 			} else {
 				
-				Room room = DBRoomsUtils.returnOneRooms(result.getRoom()).get(0);
+				Room room = DBRoomsUtils.returnOneRoomByID(result.getRoom()).get(0);
 				
 				// existe => on met à jour la room du hardware
 				

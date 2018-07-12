@@ -11,23 +11,27 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import beans.Category;
+import beans.Hardware;
 import beans.Room;
+import databaseUtils.DBCategoryUtils;
+import databaseUtils.DBHardwareUtils;
 import databaseUtils.DBRoomsUtils;
-import utils.Method;
 
 /**
- * Servlet implementation class AddRoomServlet
+ * Servlet implementation class CategoriesPHPServlet
  */
-@WebServlet("/AddRoomServlet")
-public class AddRoomServlet extends HttpServlet {
+@WebServlet("/CategoriesPHPServlet")
+public class CategoriesPHPServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static Gson gson;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddRoomServlet() {
+    public CategoriesPHPServlet() {
         super();
-        Gson gson = new Gson();
+        this.gson = new Gson();
         // TODO Auto-generated constructor stub
     }
 
@@ -38,48 +42,32 @@ public class AddRoomServlet extends HttpServlet {
 		
 		try {
 			
+			ArrayList<Category> listCategories = DBCategoryUtils.returnAllCategories();
+			
 			ArrayList<Room> listRooms = DBRoomsUtils.returnAllRooms();
 			
-			request.setAttribute("listRooms", listRooms);
+			ArrayList<Hardware> listHardwares = DBHardwareUtils.returnAllHardware();
 			
+			String listCategoriesJSON = gson.toJson(listCategories);
+			
+			String listRoomsJSON = gson.toJson(listRooms);
+			
+			response.getOutputStream().print(listCategoriesJSON);
+			
+		
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		
-		getServletContext().getRequestDispatcher("/WEB-INF/addRoom.jsp").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		ArrayList<Room> listRoom;
-		
-		try {
-			
-			String string = Method.convertStreamToString(request.getInputStream());
-			
-			String roomName = Method.findName(string);
-			
-			Room room = new Room(0, roomName);
-			
-			listRoom = DBRoomsUtils.returnOneRoom(room);
-			
-			if (listRoom.isEmpty()) {
-				DBRoomsUtils.insertRoom(room);
-			}
-			
-			
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

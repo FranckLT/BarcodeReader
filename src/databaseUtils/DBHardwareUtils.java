@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import beans.Category;
 import beans.Hardware;
+import beans.Room;
 
 public class DBHardwareUtils {
 	
@@ -17,6 +18,7 @@ public class DBHardwareUtils {
 	private final static String QUERY_FIND_IF_HARDWARE_EXIST = "select * from hardware inner join category on category.id_category = hardware.id_category inner join room on room.id_room = hardware.id_room where number_code=(?)";
 	private final static String QUERY_INSERT_HARDWARE = "insert into hardware values (null, (?), (?), (?))";
 	private final static String QUERY_UPDATE_HARDWARE = "update hardware set id_room = (?) where number_code = (?)";
+	private final static String QUERY_DELETE_HARDWARE = "DELETE FROM hardware where number_code=(?)";
 	
 	
 	public static ArrayList<Hardware> returnAllHardware() throws Exception, SQLException {
@@ -148,6 +150,32 @@ public static ArrayList<Hardware> returnOneHardware(String number_code) throws E
 		}
 	}
 
+
+	public static void deleteHardware( String name ) throws Exception, SQLException {
+
+		Connection con = null;
+		PreparedStatement stmtHardware = null;
+
+		try {
+			// Relative instruction to work with Tomcat and Mysql
+			DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+			con = DriverManager.getConnection(ConnexionJDBC.URL, ConnexionJDBC.LOGIN, ConnexionJDBC.PASSWORD);
+			stmtHardware = con.prepareStatement(QUERY_DELETE_HARDWARE);
+
+			stmtHardware.setString(1, name);
+			stmtHardware.executeUpdate();
+			
+		} finally {
+			// Close the connection
+			if (con != null) {
+				try {
+					con.close();
+				} catch (final SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 	
 	
 	

@@ -9,10 +9,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import beans.Category;
 import beans.Hardware;
 import beans.Room;
+import databaseUtils.DBCategoryUtils;
 import databaseUtils.DBHardwareUtils;
 import databaseUtils.DBRoomsUtils;
+import utils.Method;
 
 /**
  * Servlet implementation class WebsiteServlet
@@ -40,9 +43,13 @@ public class WebsiteServlet extends HttpServlet {
 			
 			ArrayList<Room> listRooms = DBRoomsUtils.returnAllRooms();
 			
+			ArrayList<Category> listCategories = DBCategoryUtils.returnAllCategories();
+			
 			request.setAttribute("listHardware", hardwareList);
 			
 			request.setAttribute("listRooms", listRooms);
+			
+			request.setAttribute("listCategories", listCategories);
 			
 		} catch (Exception e) {
 			
@@ -57,7 +64,20 @@ public class WebsiteServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
+		try {
+			
+			String string = Method.convertStreamToString(request.getInputStream());
+
+			String name = Method.findName(string);
+			
+			DBHardwareUtils.deleteHardware(name);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		doGet(request, response);
 	}
 
