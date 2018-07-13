@@ -20,7 +20,7 @@ public class DBRoomsUtils {
 	private final static String QUERY_FIND_ONE_ROOM = "SELECT * FROM room WHERE name_room=(?)";
 	private final static String QUERY_FIND_ONE_ROOM_BY_ID = "SELECT * FROM room WHERE id_room=(?)";
 	private final static String QUERY_INSERT_ROOM = "insert into room values (null, (?))";
-	private final static String QUERY_DELETE_ROOM = "DELETE FROM room where id=(?)";
+	private final static String QUERY_DELETE_ROOM = "DELETE FROM room where name_room=(?)";
 	
 	// ------------------------------------------------------------
 	// Gets all Messages from the DB
@@ -170,7 +170,7 @@ public static ArrayList<Room> returnOneRoomByID( int id) throws Exception, SQLEx
 			con = DriverManager.getConnection(ConnexionJDBC.URL, ConnexionJDBC.LOGIN, ConnexionJDBC.PASSWORD);
 			stmtHardware = con.prepareStatement(QUERY_DELETE_ROOM);
 
-			stmtHardware.setInt(1, room.getId());
+			stmtHardware.setString(1, room.getName());
 			stmtHardware.executeUpdate();
 			
 		} finally {

@@ -63,17 +63,33 @@ public class AddRoomServlet extends HttpServlet {
 			
 			String string = Method.convertStreamToString(request.getInputStream());
 			
-			String roomName = Method.findName(string);
-			
-			Room room = new Room(0, roomName);
-			
-			listRoom = DBRoomsUtils.returnOneRoom(room);
-			
-			if (listRoom.isEmpty()) {
-				DBRoomsUtils.insertRoom(room);
+			if (Method.findAttribute(string).compareTo("code")==0) {
+				
+				String roomName = Method.findName(string);
+				
+				Room room = new Room(0, roomName);
+				
+				DBRoomsUtils.deleteRoom(room);
+				
+			} else {
+				
+				String roomName = Method.findName(string).toLowerCase();
+				
+				if (Method.itCodeContainsSpecialChars(roomName)) {
+					
+					Room room = new Room(0, roomName);
+					
+					listRoom = DBRoomsUtils.returnOneRoom(room);
+					
+					if (listRoom.isEmpty()) {
+						
+						DBRoomsUtils.insertRoom(room);
+						
+					}
+				} 
+				
+				
 			}
-			
-			
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -62,17 +62,31 @@ public class AddCategoryServlet extends HttpServlet {
 
 			String string = Method.convertStreamToString(request.getInputStream());
 
-			String categoryName = Method.findName(string);
+			if (Method.findAttribute(string).compareTo("code")==0) {
 
-			Category category = new Category(0, categoryName);
-			
-			listCategory = DBCategoryUtils.returnOneCategory(categoryName);
-			
-			if (listCategory.isEmpty()) {
-				DBCategoryUtils.insertRoom(category);
+				String roomName = Method.findName(string);
+
+				Category category = new Category(0, roomName);
+
+				DBCategoryUtils.deleteCategory(category);
+
+			} else {
+				
+				String categoryName = Method.findName(string).toLowerCase();
+				
+				if (Method.itCodeContainsSpecialChars(categoryName)) {
+					
+					Category category = new Category(0, categoryName);
+
+					listCategory = DBCategoryUtils.returnOneCategory(categoryName);
+
+					if (listCategory.isEmpty()) {
+						DBCategoryUtils.insertRoom(category);
+					}
+				}
+
+				
 			}
-
-			
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

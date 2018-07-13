@@ -19,7 +19,7 @@ public class DBCategoryUtils {
 	public final static String QUERY_FIND_ONE_CATEGORY = "select * from category where name_category=(?)";
 	private final static String QUERY_FIND_CATEGORIES = "SELECT * FROM category";
 	private final static String QUERY_INSERT_CATEGORY = "insert into category values (null, (?))";
-	private final static String QUERY_DELETE_CATEGORY = "DELETE FROM category where id=(?)";
+	private final static String QUERY_DELETE_CATEGORY = "DELETE FROM category where name_category=(?)";
 	
 public static ArrayList<Category> returnOneCategory(String name) throws Exception, SQLException {
 	
@@ -130,7 +130,7 @@ public static void deleteCategory( Category category ) throws Exception, SQLExce
 		con = DriverManager.getConnection(ConnexionJDBC.URL, ConnexionJDBC.LOGIN, ConnexionJDBC.PASSWORD);
 		stmtHardware = con.prepareStatement(QUERY_DELETE_CATEGORY);
 
-		stmtHardware.setInt(1, category.getId());
+		stmtHardware.setString(1, category.getName());
 		stmtHardware.executeUpdate();
 		
 	} finally {

@@ -37,13 +37,14 @@ public static String findCodeHardware(String code) throws SQLException, Exceptio
 
 public static boolean itCodeContainsSpecialChars(String code) throws SQLException, Exception {
 	
-	final Pattern pattern = Pattern.compile("[&é(§è!çà)-^_$*€ù%`£=+:/\\\"\';.,?]");
+	final Pattern pattern = Pattern.compile("[\\&\\é\\(\\§\\è\\!\\ç\\à\\)\\^\\-\\_\\$\\*\\€\\ù\\%\\`\\\\£\\=\\+\\:\\/\\\\\\\"\\'\\;\\.\\,\\?\\}\\{\\<\\>]");
 	
 	Matcher matcher = pattern.matcher(code);
 	
 	while (matcher.find()) {
 		
 		return false;
+		
 	}
 	
 	return true;
@@ -59,6 +60,16 @@ public static String findName(String code) throws SQLException, Exception {
 		return name[1];
 		
 	}
+
+public static String findAttribute(String code) throws SQLException, Exception {
+	
+	String regex = "=";
+	
+	String name[] = code.split(regex);
+	
+	return name[0];
+	
+}
 	
 	
 	public static String convertStreamToString(java.io.InputStream is) {

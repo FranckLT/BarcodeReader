@@ -47,7 +47,7 @@
 	
 	<%@ include file="sortForm.jsp" %>
 
-		<div class="row border border-primary rounded p-3 col-8">
+		<!--  <div class="row border border-primary rounded p-3 col-8">
 			<div class="col-5 align-middle">
 				<label for="rooms" class="align-middle">Rooms : </label> <select id="selectRoom"
 					class="btn btn-primary dropdown-toggle align-middle" name="rooms">
@@ -69,29 +69,39 @@
 				</select>
 			</div>
 			<div class="col-2 align-middle">
-				<button class="btn btn-primary px-4" onClick="lol()">Sort</button>
+				<button class="btn btn-primary px-4" onClick="sort()">Sort</button>
 			</div>
-		</div>
+		</div>-->
 
 		<br>
 
 		<div class="container">
-			<label for="rooms" class="align-middle">Rooms : </label>
-			<select id="roomsSelect"class="js-example-basic-multiple" name="rooms"
-				multiple="multiple">
-				<c:forEach items="${listRooms}" var="room" varStatus="status">
-					<option value="${room.id }">${room.name}</option>
-				</c:forEach>
-			</select>
-			
-			<label for="rooms" class="align-middle">Category : </label>
-			<select id="categoriesSelect" class="js-example-basic-multiple" name="category"
-				multiple="multiple">
-				<c:forEach items="${listCategories}" var="category" varStatus="status">
-					<option value="${category.id }">${category.name}</option>
-				</c:forEach>
-			</select>
 
+			<div class="row">
+
+				<div class="col-lg-4 col-md-6">
+					<label for="rooms" class="align-middle col-12">Rooms : </label> <select
+						id="roomsSelect" class="js-example-basic-multiple col-5" name="rooms"
+						multiple="multiple">
+						<c:forEach items="${listRooms}" var="room" varStatus="status">
+							<option value="${room.id }">${room.name}</option>
+						</c:forEach>
+					</select>
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<label for="rooms" class="align-middle col-12"> Category : </label> <select
+						id="categoriesSelect" class="js-example-basic-multiple col-5"
+						name="category" multiple="multiple">
+						<c:forEach items="${listCategories}" var="category"
+							varStatus="status">
+							<option value="${category.id }">${category.name}</option>
+						</c:forEach>
+					</select>
+				</div>
+				<div class="col-3">
+					<button class="btn btn-primary px-4" onClick="sort()">Sort</button>
+				</div>
+			</div>
 		</div>
 
 		<br>
@@ -125,7 +135,7 @@
 													<tr>
 														<td class="col-md-4">${hardware.code}</td>
 														<td class="col-md-4"><input type="button"
-															class="btn btn-danger btn-send" value="Supprimer"
+															class="btn btn-danger btn-send " value="Del"
 															onclick="on('${hardware.code}')"></td>
 													</tr>
 												</c:if>
